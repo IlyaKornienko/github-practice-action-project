@@ -15,11 +15,8 @@ jobs:
       - name: NodeJS linting
         run: npm run lint
       - name: Test NPM
-        run: npm test
-
-    deploy:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
+        run: npm run test
+      - name: Build code
+        run: npm run build
       - name: Deploy project
         run: echo "Deploy code ..."
