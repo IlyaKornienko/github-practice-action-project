@@ -1,7 +1,7 @@
 name: Practice tasks
 on: push
 jobs:
-    dependency_install:
+    test:
       runs-on: ubuntu-latest
       steps:
       - name: Download the code
@@ -12,29 +12,14 @@ jobs:
           node-version: '18'
       - name: Install dependencies
         run: npm ci
-
-    lint:
-      needs: dependency_install
-      runs-on: ubuntu-latest
-      steps:
-      - name: Download the code
-        uses: actions/checkout@v7
-      - name: Install NodeJS
-        uses: actions/setup-node@v7
-        with:
-          node-version: '18'
       - name: NodeJS linting
         run: npm run lint
-
-    test:
-      needs: lint
-      runs-on: ubuntu-latest
-      steps:
-      - name: Download the code
-        uses: actions/checkout@v7
-      - name: Install NodeJS
-        uses: actions/setup-node@v7
-        with:
-          node-version: '18'
       - name: Test NPM
         run: npm test
+
+    deploy:
+      needs: test
+      runs-on: ubuntu-latest
+      steps:
+      - name: Deploy project
+        run: echo "Deploy code ..."
